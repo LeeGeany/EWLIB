@@ -22,6 +22,11 @@ namespace EWLIB
 
     }
 
+    CTCPServer::~CTCPServer()
+    {
+        
+    }
+
     EW_SOCKET_T CTCPServer::Socket()
     {
         m_sockServer = socket(AF_INET, SOCK_STREAM, 0);
@@ -51,9 +56,9 @@ namespace EWLIB
     STATUS CTCPServer::Bind()
     {
         STATUS ret = true;
-        int ret = bind(m_sockServer, reinterpret_cast<sockaddr*>(&(m_stServerAddr)), sizeof(m_stServerAddr));
+        int tRet = bind(m_sockServer, reinterpret_cast<sockaddr*>(&(m_stServerAddr)), sizeof(m_stServerAddr));
 
-        if(ret < 0) {
+        if(tRet < 0) {
             std::cout << "[ERROR] : Errno | " << errno << "\n";
             ret = false;
         } 
@@ -63,9 +68,9 @@ namespace EWLIB
     STATUS CTCPServer::Bind(EW_SOCKET_T _sockServer, EW_SOCKET_ADDR_IN_T _sockAddrInfo)
     {
         STATUS ret = true;
-        int ret = bind(_sockServer, reinterpret_cast<sockaddr*>(&(_sockAddrInfo)), sizeof(m_stServerAddr));
+        int tRet = bind(_sockServer, reinterpret_cast<sockaddr*>(&(_sockAddrInfo)), sizeof(m_stServerAddr));
 
-        if(ret < 0) {
+        if(tRet < 0) {
             std::cout << "[ERROR] : Errno | " << errno << "\n";
             ret = false;
         } 
@@ -75,9 +80,9 @@ namespace EWLIB
     STATUS CTCPServer::Listen()
     {
         STATUS ret = true;
-        int ret = listen(m_sockServer, EW_CLIENT_CONN_MAX_SIZE);
+        int tRet = listen(m_sockServer, EW_CLIENT_CONN_MAX_SIZE);
         
-        if(ret < 0) {
+        if(tRet < 0) {
             std::cout << "[ERROR] : Errno | " << errno << "\n";
             ret = false;
         } 
@@ -87,9 +92,9 @@ namespace EWLIB
     STATUS CTCPServer::Listen(EW_SOCKET_T _sockServer)
     {
         STATUS ret = true;
-        int ret = listen(_sockServer, EW_CLIENT_CONN_MAX_SIZE);
+        int tRet = listen(_sockServer, EW_CLIENT_CONN_MAX_SIZE);
         
-        if(ret < 0) {
+        if(tRet < 0) {
             std::cout << "[ERROR] : Errno | " << errno << "\n";
             ret = false;
         } 
@@ -245,26 +250,6 @@ namespace EWLIB
             {
                 ret = false;
             }
-        }
-        return ret;
-    }
-
-    STATUS CTCPServer::SetRecvBufferSize(EW_BUFFER_SIZE _BufferSize)
-    {
-        STATUS ret = true;
-        int ret = setsockopt(m_sockServer, SOL_SOCKET, SO_RCVBUF, &_BufferSize, sizeof(m_Option));
-        if(ret < 0) {
-            ret = false;
-        }
-        return ret;
-    }
-
-    STATUS CTCPServer::SetRecvBufferSize(EW_BUFFER_SIZE _BufferSize)
-    {
-        STATUS ret = true;
-        int ret = setsockopt(m_sockServer, SOL_SOCKET, SO_SNDBUF, &_BufferSize, sizeof(m_Option));
-        if(ret < 0) {
-            ret = false;
         }
         return ret;
     }

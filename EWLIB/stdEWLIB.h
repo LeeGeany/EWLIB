@@ -16,12 +16,12 @@
 #include "EWLIB/stdLinux.h"
 #include "EWLIB/stdPosix.h"
 
-#include "EWLIB/Container/CRingBuffer.h"
-
 namespace EWLIB
 {
 
     using BYTE                  = std::byte;
+    using STATUS = bool;
+
 
     // ========================= Common/Mutex ========================= //
     using EW_MUTEX_T            = std::mutex;
@@ -88,7 +88,6 @@ namespace EWLIB
 
     // ETHERNET/BUFFER/SIZE
     using EW_BUFFER_SIZE            = size_t               ;
-    using EW_RECV_DATA_BUFFER_T     = CRingBuffer          ;
     using EW_SEND_DATA_BUFFER_T     = std::array<char, EW_SEND_BUFFER_SIZE> ;
 
     // ETHERNET/TCP/EPOLL
@@ -105,7 +104,6 @@ namespace EWLIB
 
 
     // Types
-    using STATUS = bool;
 
 } /* namespace EWLIB */
 #endif /* __EWLIB_STD_EWLIB_H__ */

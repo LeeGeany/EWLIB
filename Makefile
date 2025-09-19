@@ -24,15 +24,14 @@ INCLUDE = -I $(SRC_DIR)
 TARGET = main
 
 # EWLIB/Task
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Thread/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Process/*cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/*.cpp)
-
-# EWFW/TASK
-SRCS += $(wildcard $(SRC_DIR)/EWFW/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWFW/Task/Thread/*.cpp)
-
-# EWAPP/APP
-SRCS += $(wildcard $(SRC_DIR)/EWAPP/Thread/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/TCP/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Container/*cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/*cpp)
 
 # Main
 SRCS += $(wildcard $(SRC_DIR)/*.cpp)

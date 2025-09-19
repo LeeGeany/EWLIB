@@ -12,8 +12,9 @@
 #ifndef __EWLIB_CONTAINER_CRINGBUFFER_H__
 #define __EWLIB_CONTAINER_CRINGBUFFER_H__
 
-#include "EWLIB/stdC++17.h"
 #include "EWLIB/stdEWLIB.h"
+#include "EWLIB/stdC++17.h"
+
 namespace EWLIB
 {
     class CRingBuffer 

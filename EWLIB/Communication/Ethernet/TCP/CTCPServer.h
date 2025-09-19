@@ -54,9 +54,6 @@ namespace EWLIB
         STATUS SetSockOption(EC_SOCKET_OPT _Option);
         STATUS SetSockOption(EW_SOCKET_T _Socket, EC_SOCKET_OPT _Option, EW_SOCK_OPTION_T * _pOption);
 
-        STATUS SetRecvBufferSize(EW_BUFFER_SIZE _BufferSize);
-        STATUS SetRecvBufferSize(EW_BUFFER_SIZE _BufferSize);
-
         STATUS Close();
         STATUS Close(EW_SOCKET_T _Socket);
 
@@ -64,13 +61,14 @@ namespace EWLIB
         EW_SOCKET_T TCPSend(std::string _strWhereIp, const char* _strBuffer, const size_t _iBufferSize);
 
     protected:
+        virtual int OnReceive(char * Buffer, const size_t BufferSize) {return 0; }
+        virtual void OnSend(char * Buffer, const size_t BufferSize) { }
+
+    protected:
         EW_PORT_T                   m_serverPort;
         EW_SOCKET_T                 m_sockServer;
         EW_SOCKET_ADDR_IN_T         m_stServerAddr;
         EW_SOCK_OPTION_T            m_Option;
-
-        EW_BUFFER_SIZE              m_RecvBufferSize;
-        EW_BUFFER_SIZE              m_SendBufferSize;
 
         EW_CLIENT_SOCKET_UMAP_T     m_umSockClient;
     }; /* class CTCPServer */
