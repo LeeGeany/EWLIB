@@ -1,17 +1,17 @@
 /**
- * @file CFile.cpp
+ * @file CAutoLock.cpp
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
- * @date 2025-10-11
+ * @date 2025-10-10
  * 
  * @copyright Copyright (c) 2025
  * 
  */
 
-#include "CFile.h"
+#include "CAutoLock.h"
 
-namespace EWLIB
+namespace EWLIB 
 {
 
 } /* namespace EWLIB */

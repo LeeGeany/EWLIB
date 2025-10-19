@@ -13,7 +13,6 @@
 #define __EWLIB_CONTAINER_CRINGBUFFER_H__
 
 #include "EWLIB/stdEWLIB.h"
-#include "EWLIB/stdC++17.h"
 
 namespace EWLIB
 {

@@ -18,6 +18,9 @@
 // TYPE
 #include <sys/types.h>
 
+//
+#include <sys/wait.h>
+
 // IPC
 #include <sys/msg.h>
 #include <sys/ipc.h>
@@ -32,5 +35,6 @@
 
 // FILE CONTROL
 #include <fcntl.h>
+
 
 #endif /* __STD__LINUX_H__ */

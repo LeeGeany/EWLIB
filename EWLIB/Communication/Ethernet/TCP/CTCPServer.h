@@ -13,7 +13,6 @@
 #define __EWLIB_COMMUNICATION_ETHERNET_TCP_CTCPSERVER_H__
 
 #include "EWLIB/stdEWLIB.h"
-#include "EWLIB/stdLinux.h"
 
 #include "EWLIB/Communication/Ethernet/TCP/IReceive.h"
 #include "EWLIB/Communication/Ethernet/TCP/ISend.h"

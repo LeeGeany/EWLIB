@@ -1,5 +1,5 @@
 /**
- * @file CFile.cpp
+ * @file CDir.cpp
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
@@ -9,7 +9,7 @@
  * 
  */
 
-#include "CFile.h"
+#include "CDir.h"
 
 namespace EWLIB
 {

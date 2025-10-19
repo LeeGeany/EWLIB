@@ -12,19 +12,42 @@
 #ifndef __EWLIB_STD_EWLIB_H__
 #define __EWLIB_STD_EWLIB_H__
 
-#include "EWLIB/stdC++17.h"
+#include "EWLIB/stdC++.h"
 #include "EWLIB/stdLinux.h"
 #include "EWLIB/stdPosix.h"
 
 namespace EWLIB
 {
     // ========================= Primitive Type ========================= //
-    using BYTE                  = std::byte;
+    using EW_BYTE                  = std::byte;
+    using EW_BYTE_VECTOR_T         = std::vector<EW_BYTE>;
+    template <std::size_t T>
+    using EW_BYTE_ARRAY_T          = std::array<EW_BYTE, T>;
+
+    using EW_CHAR_VECTOR_T         = std::vector<char>;
+    template <std::size_t T>
+    using EW_CHAR_ARRAY_T          = std::array<char, T>;
+
     using STATUS = bool;
 
     template <typename T>
     using EW_FUNCTION_T         = std::function<T>;
+    using EW_CALLBACK_T         = std::function<void(void)>;
 
+    // ========================= Time ========================= //
+    using EW_MILLISECOND_T  = std::chrono::milliseconds;
+    using EW_MICROSECOND_T  = std::chrono::microseconds;
+    using EW_NANOSECOND_T   = std::chrono::nanoseconds;
+
+    using EW_CLOCK_T        = std::chrono::steady_clock;
+    using EW_TIMEPOINT_T    = std::chrono::steady_clock::time_point;
+    using EW_DURATION_T     = std::chrono::steady_clock::duration;
+
+    struct ST_SYSTEM_TIME_T
+    {
+        std::int64_t seconds;
+        std::int64_t nanoseconds;
+    };
 
     // ========================= Common/Mutex ========================= //
     using EW_MUTEX_T            = std::mutex;
@@ -71,11 +94,11 @@ namespace EWLIB
 
     // ========================= ETHERNET/TCP ========================= //
     // ETHERNET/BUFFER/SIZE
-    constexpr const size_t EW_CLIENT_CONN_MAX_SIZE  = 16;
-    constexpr const size_t EW_PACKET_SIZE           = 1400;
-    constexpr const size_t EW_EPOLL_MAX_SIZE        = 32768;        // HOW MANY EVENT CAN BE STORED IN QUEUE? 32K
-    constexpr const size_t EW_RECV_BUFFER_SIZE      = 1400 ;      
-    constexpr const size_t EW_SEND_BUFFER_SIZE      = 1400 ;
+    inline constexpr const size_t EW_CLIENT_CONN_MAX_SIZE  = 16;
+    inline constexpr const size_t EW_PACKET_SIZE           = 1400;
+    inline constexpr const size_t EW_EPOLL_MAX_SIZE        = 32768;        // HOW MANY EVENT CAN BE STORED IN QUEUE? 32K
+    inline constexpr const size_t EW_RECV_BUFFER_SIZE      = 1400 ;      
+    inline constexpr const size_t EW_SEND_BUFFER_SIZE      = 1400 ;
 
     using EW_SOCKET_T           =   int32_t                ;
     using EW_SOCKET_ADDR_T      =   struct sockaddr        ;
@@ -104,10 +127,7 @@ namespace EWLIB
     using EW_CLIENT_SOCKET_UMAP_T = std::unordered_map<std::string, EW_SOCKET_T>;
     //using EW_CLIENT_BUFFER_UMAP_T = std::unordered_map<EW_SOCKET_T, std::deque<ST_TCP_PACKET_T>>;
 
-    // ========================= File/Directory ========================= //
-    using EW_FILE_PATH_T = std::filesystem::path;
-    using EW_FILE_INFO_T = std::filesystem::file_status;
-    using EW_FILE_DIR_ITER_T = std::filesystem::directory_iterator;
+
     
 } /* namespace EWLIB */
 #endif /* __EWLIB_STD_EWLIB_H__ */

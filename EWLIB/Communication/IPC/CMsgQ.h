@@ -26,8 +26,12 @@ namespace EWLIB
 
     public:
         EW_MSGQ_ID_T SubscribeMsgQ(EW_MSGQ_KEY_T _MsgKey);
-        int SendMsg(EW_MSGQ_ID_T _DestID, BYTE * _pBuffer);
-        int RecvMsg(BYTE * _pBuffer);
+
+        // TODO
+        // Make same function as another type parameter
+        // ex) EW_BYTE_ARRAY_T, EW_BYTE_VECTOR_T
+        int SendMsg(EW_MSGQ_ID_T _DestID, EW_BYTE * _pBuffer);
+        int RecvMsg(EW_BYTE * _pBuffer);
         
         int FlushMsg();
         int InfoMsg(EW_MSGQ_ID_T _MsgID, struct msqid_ds * _pINfo);

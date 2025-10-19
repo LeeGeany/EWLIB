@@ -3,79 +3,83 @@
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
- * @date 2025-09-18
+ * @date 2025-10-11
  * 
  * @copyright Copyright (c) 2025
  * 
  */
 
-#ifndef _EWLIB_FILEIO_FILE_CFILE_H__
-#define _EWLIB_FILEIO_FILE_CFILE_H__
+#ifndef __EWLIB_FILEIO_FILE_CFILE_H__
+#define __EWLIB_FILEIO_FILE_CFILE_H__
 
 #include "EWLIB/stdEWLIB.h"
-#include "EWLIB/stdC++17.h"
 
 namespace EWLIB
 {
-    class CFile
+    class CFile 
     {
     public:
-        explicit CFile(const std::string _pathName);
-        virtual ~CFile();
-
-    public: 
-        CFile & operator+(const std::string & _rBuffer)
-        {   
-            m_ofsFile << _rBuffer;
-            return *this;
-        }
-
-        CFile & operator+=(const std::string & _rBuffer)
-        {
-            m_ofsFile << _rBuffer;
-            return *this;
-        }
-
-        CFile & operator+(const char * const _rBuffer)
-        {   
-            m_ofsFile << (std::string)_rBuffer;
-            return *this;
-        }
-
-        CFile & operator+=(const char * const _rBuffer)
-        {
-            m_ofsFile << (std::string)_rBuffer;
-            return *this;
-        }
+        CFile() noexcept = default;
+        virtual ~CFile() = default;
 
     public:
-        // is File Exist
-        STATUS isExist(EW_FILE_PATH_T _filePath);
+        [[nodiscard]] static STATUS Exists(const std::filesystem::path& _path) noexcept
+        {
+            STATUS Ret = true;
+            std::error_code ec;
+            Ret = std::filesystem::exists(_path, ec) && std::filesystem::is_regular_file(_path, ec);
+            return Ret;
+        }
 
-        // File Remove
-        STATUS Remove(EW_FILE_PATH_T _filePath);
+        [[nodiscard]] static std::uintmax_t Size(const std::filesystem::path& _path) noexcept
+        {
+            std::error_code ec;
+            std::uintmax_t tSize = std::filesystem::file_size(_path, ec);
+            return tSize;
+        }
 
-        // File Read
+        [[nodiscard]] static STATUS Copy(const std::filesystem::path& _src, const std::filesystem::path& _dst, bool _overwrite = false) noexcept
+        {
+            std::error_code ec;
+            std::filesystem::copy_options opt = _overwrite ? std::filesystem::copy_options::overwrite_existing : std::filesystem::copy_options::none;
+            std::filesystem::copy_file(_src, _dst, opt, ec);
+            return !ec;
+        }
 
-        // File Write
+        [[nodiscard]] static STATUS Rename(const std::filesystem::path& src, const std::filesystem::path& dst) noexcept
+        {
+            std::error_code ec;
+            std::filesystem::rename(src, dst, ec);
+            return !ec;
+        }
 
-        // File Permission
-        EW_FILE_INFO_T GetFileStatus(EW_FILE_PATH_T _filePath);
+        [[nodiscard]] static STATUS Remove(const std::filesystem::path& filePath) noexcept
+        {
+            std::error_code ec;
+            std::filesystem::remove(filePath, ec);
+            return !ec;
+        }
 
-        // File Copy
-        STATUS Copy(EW_FILE_PATH_T _src, EW_FILE_PATH_T _dst);
-    
-        // File Rename
-        STATUS Rename(EW_FILE_PATH_T _old, EW_FILE_PATH_T _new);
+        [[nodiscard]] static std::filesystem::file_time_type LastWriteTime(const std::filesystem::path& filePath) noexcept
+        {
+            std::error_code ec;
+            std::filesystem::file_time_type tInfo = std::filesystem::last_write_time(filePath, ec);
+            return tInfo;
+        }
 
-        // File Create exist findingn first
-        STATUS CreateFile(EW_FILE_PATH_T _filePath);
+        [[nodiscard]] static std::filesystem::perms GetPermissions(const std::filesystem::path& filePath) noexcept
+        {
+            std::error_code ec;
+            auto status = std::filesystem::status(filePath, ec);
+            return status.permissions();
+        }
 
-
-    private:
-        std::filesystem::path m_Path;
-        const std::string m_strFilePath;
-        std::ofstream m_ofsFile;  
+        static void SetPermissions(const std::filesystem::path& filePath, std::filesystem::perms perms) noexcept
+        {
+            std::error_code ec;
+            std::filesystem::permissions(filePath, perms, std::filesystem::perm_options::replace, ec);
+        }
     };
-} /* namespace EWLIB */
-#endif /* _EWLIB_FILEIO_FILE_CFILE_H__ */
+
+} // namespace EWLIB
+#endif // __EWLIB_FILEIO_FILE_CFILE_H__

@@ -37,7 +37,7 @@
         return retID;
     }
 
-    int CMsgQ::SendMsg(EW_MSGQ_ID_T _DestID, BYTE * _pBuffer)
+    int CMsgQ::SendMsg(EW_MSGQ_ID_T _DestID, EW_BYTE * _pBuffer)
     {
         m_SendBuffer.mtype = 1;
         memcpy(&(m_SendBuffer.data[0]), _pBuffer, sizeof(m_SendBuffer.data));
@@ -55,7 +55,7 @@
         return ret;
     }
 
-    int CMsgQ::RecvMsg(BYTE * _pBuffer)
+    int CMsgQ::RecvMsg(EW_BYTE * _pBuffer)
     {
         int ret =  msgrcv(m_MsgID, &m_RecvBuffer, sizeof(m_RecvBuffer) - sizeof(long),0, 0);
         if(ret == -1) {
