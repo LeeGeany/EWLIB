@@ -18,6 +18,6 @@
         virtual ~ISend() = default;
 
     protected:
-        virtual void OnSend(char * Buffer, const size_t BufferSize) = 0;
+        virtual uint32_t OnSend(char * Buffer, const size_t BufferSize) = 0;
     };
 } /* namespace EWLIB */

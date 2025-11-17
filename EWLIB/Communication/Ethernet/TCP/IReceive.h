@@ -18,6 +18,6 @@ namespace EWLIB
         virtual ~IReceive() = default;
 
     protected:
-        virtual int OnReceive(char * Buffer, const size_t BufferSize) = 0;
+        virtual uint32_t OnReceive(char * Buffer, const size_t BufferSize) = 0;
     };
 } /* namespace EWLIB */

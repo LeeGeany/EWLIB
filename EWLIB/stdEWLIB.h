@@ -94,17 +94,7 @@ namespace EWLIB
 
     // ========================= ETHERNET/TCP ========================= //
     // ETHERNET/BUFFER/SIZE
-    inline constexpr const size_t EW_CLIENT_CONN_MAX_SIZE  = 16;
-    inline constexpr const size_t EW_PACKET_SIZE           = 1400;
-    inline constexpr const size_t EW_EPOLL_MAX_SIZE        = 32768;        // HOW MANY EVENT CAN BE STORED IN QUEUE? 32K
-    inline constexpr const size_t EW_RECV_BUFFER_SIZE      = 1400 ;      
-    inline constexpr const size_t EW_SEND_BUFFER_SIZE      = 1400 ;
 
-    using EW_SOCKET_T           =   int32_t                ;
-    using EW_SOCKET_ADDR_T      =   struct sockaddr        ;
-    using EW_SOCKET_ADDR_IN_T   =   struct sockaddr_in     ;
-    using EW_SOCKET_LENGTH_T    =   socklen_t              ;
-    using EW_SOCK_OPTION_T      =   int32_t                ;
 
     // ETHENET/TYPE
     using EW_PORT_T             =   const uint16_t         ;
