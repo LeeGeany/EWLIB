@@ -31,34 +31,34 @@ OBJ_DIR = Objs
 TARGET = main
 
 # EWLIB
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/*.cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/TCP/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Signal/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/TCP/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Signal/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/*.cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Container/RingBuffer*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Container/RingBuffer*cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Lock/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Mutex/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Semaphore/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Spinlock/*.cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Waiter/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Lock/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Mutex/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Semaphore/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Spinlock/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Waiter/*.cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/Dir/*cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/File/*cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/FIO/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/Dir/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/File/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/FIO/*cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Thread/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Thread/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Process/*cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Delay/*cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Time/*cpp)
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Timer/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Delay/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Time/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Timer/*cpp)
 
-SRCS += $(wildcard $(SRC_DIR)/EWLIB/Util/*cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Util/*cpp)
 
 # Main
 SRCS += $(wildcard $(SRC_DIR)/*.cpp)

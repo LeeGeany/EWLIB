@@ -16,9 +16,12 @@
 #include "EWLIB/stdLinux.h"
 #include "EWLIB/stdPosix.h"
 
-namespace EWLIB
+namespace jlib
 {
     // ========================= Primitive Type ========================= //
+
+    using state_t = bool;
+
     using EW_BYTE                  = std::byte;
     using EW_BYTE_VECTOR_T         = std::vector<EW_BYTE>;
     template <std::size_t T>
@@ -28,12 +31,12 @@ namespace EWLIB
     template <std::size_t T>
     using EW_CHAR_ARRAY_T          = std::array<char, T>;
 
-    using STATUS = bool;
+
 
     template <typename T>
     using EW_FUNCTION_T         = std::function<T>;
     using EW_CALLBACK_T         = std::function<void(void)>;
-
+    
     // ========================= Time ========================= //
     using EW_MILLISECOND_T  = std::chrono::milliseconds;
     using EW_MICROSECOND_T  = std::chrono::microseconds;
@@ -103,18 +106,18 @@ namespace EWLIB
 
     // ETHERNET/BUFFER/SIZE
     using EW_BUFFER_SIZE            = size_t               ;
-    using EW_SEND_DATA_BUFFER_T     = std::array<char, EW_SEND_BUFFER_SIZE> ;
+   // using EW_SEND_DATA_BUFFER_T     = std::array<char, EW_SEND_BUFFER_SIZE> ;
 
     // ETHERNET/TCP/EPOLL
     using EW_EPOLL_EVENT_T      =   struct epoll_event     ;
     using EW_EPOLL_T            =   int32_t                ;
 
     // ETHERNET/BUFFER
-    using EW_EPOLL_EVENT_BUFFER_T   = std::array<EW_EPOLL_EVENT_T, EW_EPOLL_MAX_SIZE>;
+    //using EW_EPOLL_EVENT_BUFFER_T   = std::array<EW_EPOLL_EVENT_T, EW_EPOLL_MAX_SIZE>;
 
 
     // ETHERNET/HASHMAP
-    using EW_CLIENT_SOCKET_UMAP_T = std::unordered_map<std::string, EW_SOCKET_T>;
+    //using EW_CLIENT_SOCKET_UMAP_T = std::unordered_map<std::string, EW_SOCKET_T>;
     //using EW_CLIENT_BUFFER_UMAP_T = std::unordered_map<EW_SOCKET_T, std::deque<ST_TCP_PACKET_T>>;
 
 

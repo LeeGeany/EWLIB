@@ -10,31 +10,20 @@
  */
 
 #include "EWLIB/stdEWLIB.h"
-#include <fftw3.h>
+
+#include "EWLIB/Task/Process/CProcess.h"
 
 int main() {
-    const int N = 2048;  // 샘플 개수
-    double in[N];     // 입력 데이터
-    fftw_complex out[N/2 + 1];  // 복소 출력 데이터
+    
+    // CProcess Example
+    jlib::CProcess Process1("../../a.out");
+    jlib::CProcess Process2("../../a.out", jlib::J_PRINT_IN_TERMINAL);
+    jlib::CProcess process3("../../a.out", jlib::J_PRINT_IN_STRING);
+    std::cout << process3.Result();
 
-    // 예제 입력 (사인파)
-    for (int i = 0; i < N; ++i)
-        in[i] = sin(2 * M_PI * i / N);
-
-    // FFT 계획(plan) 생성
-    fftw_plan plan = fftw_plan_dft_r2c_1d(N, in, out, FFTW_ESTIMATE);
-
-    // FFT 실행
-    fftw_execute(plan);
-
-    // 결과 출력
-    std::cout << "FFT 결과:\n";
-    for (int i = 0; i < N/2 + 1; ++i)
-        std::cout << i << ": " << out[i][0] << " + " << out[i][1] << "i\n";
-
-    // 계획 해제
-    fftw_destroy_plan(plan);
-    fftw_cleanup();
+    jlib::CProcess Process4(" if ping -c 1 192.168.0.1 > /dev/null 2>&1; then echo \"connected\"; else echo \"Disconnect\"; fi", jlib::J_PRINT_IN_TERMINAL);
+    jlib::CProcess Process5(" if ping -c 1 192.168.0.1 > /dev/null 2>&1; then echo \"connected\"; else echo \"Disconnect\"; fi", jlib::J_PRINT_IN_STRING);
+    std::cout << Process5.Result();
 
     return 0;
 }

@@ -66,7 +66,8 @@ namespace EWLIB
         EW_SOCKET_T native_handle();
         
         STATUS SetSockOption(EW_SOCKET_T _Socket, EC_SOCKET_OPT _Option, EW_SOCK_OPTION_T * _pOption);
-    public:
+    
+        public:
         virtual uint32_t OnReceive(char * Buffer, const size_t BufferSize) override;
         virtual uint32_t OnSend(char * Buffer, const size_t BufferSize) override;
 
