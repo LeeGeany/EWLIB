@@ -31,11 +31,9 @@ namespace jlib
     template <std::size_t T>
     using EW_CHAR_ARRAY_T          = std::array<char, T>;
 
-
-
     template <typename T>
-    using EW_FUNCTION_T         = std::function<T>;
-    using EW_CALLBACK_T         = std::function<void(void)>;
+    using J_FUNCTION_T          = std::function<T>;
+    using J_CALLBACK_T          = std::function<void(void)>;
     
     // ========================= Time ========================= //
     using EW_MILLISECOND_T  = std::chrono::milliseconds;
@@ -53,36 +51,14 @@ namespace jlib
     };
 
     // ========================= Common/Mutex ========================= //
-    using EW_MUTEX_T            = std::mutex;
+    using J_MUTEX_T            = std::mutex;
     using EW_LOCK_GUARD_MUTEX_T = std::lock_guard<std::mutex>;
 
 
     // ========================= Task/Thread ========================= //
-    using EW_THREAD_T           = std::thread;
-    using EW_THREAD_ID_T        = uint32_t;
-    using EW_THREAD_NAME_T      = std::string;
     
-    enum class EC_THREAD_RUN_TYPE {
-          THREAD_ONCE_T
-        , THREAD_LOOP_T
-        /*
-        , THREAD_TIME_T
-        */
-    };
 
-    enum class EC_THREAD_STATUS_TYPE {
-          THREAD_STATUS_NEW_T
-        , THREAD_STATUS_WAIT_T
-        , THREAD_STATUS_RUN_T
-        , THREAD_STATUS_TERMINATE_T
-    };
 
-    struct ST_THREAD_CONTROL_BLOCK_T{
-        EW_THREAD_NAME_T        strThreadName   ;
-        EW_THREAD_ID_T          uiThreadID      ;
-        EC_THREAD_RUN_TYPE      ecThreadRun     ;
-        EC_THREAD_STATUS_TYPE   ecThreadStatus  ;
-    };
 
 
     // ========================= IPC/MSGQ ========================= //

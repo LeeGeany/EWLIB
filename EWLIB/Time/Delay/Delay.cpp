@@ -11,7 +11,7 @@
 
 #include "Delay.h"
 
-namespace EWLIB
+namespace jlib
 {
     void delay_ns(std::uint64_t ns) noexcept
     {

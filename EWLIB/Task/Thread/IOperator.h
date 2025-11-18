@@ -9,19 +9,18 @@
  * 
  */
 
-namespace EWLIB {
-
-class IOperator
+namespace jlib 
 {
-public:
-    IOperator(){};
-    virtual ~IOperator(){};
+    class IOperator
+    {
+    public:
+        IOperator(){};
+        virtual ~IOperator(){};
 
-protected:
-    virtual void PreOperate() =0;
-    virtual void Operate() = 0;
-    virtual void PostOperate() = 0;
+    protected:
+        virtual void PreOperate() =0;
+        virtual void Operate() = 0;
+        virtual void PostOperate() = 0;
 
-}; /* IOperator */
-
+    }; /* IOperator */
 } /* namespace EWLIB */

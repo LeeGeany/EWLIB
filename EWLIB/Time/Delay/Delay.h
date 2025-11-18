@@ -14,14 +14,27 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
-
+    /**
+     * @brief 
+     * 
+     * @param ns 
+     */
     void delay_ns(std::uint64_t ns) noexcept;
 
+    /**
+     * @brief 
+     * 
+     * @param ms 
+     */
     void delay_ms(std::uint32_t ms) noexcept;
 
+    /**
+     * @brief 
+     * 
+     * @param us 
+     */
     void delay_us(std::uint32_t us) noexcept;
-
 } /* namespace EWLIB */
 #endif /* __EWLIB_TIME_DELAY_DELAY_H__ */

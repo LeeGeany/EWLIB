@@ -51,10 +51,10 @@ TARGET = main
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/File/*cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/FIO/*cpp)
 
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Thread/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Thread/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Process/*cpp)
 
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Delay/*cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Delay/*cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Time/*cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Timer/*cpp)
 

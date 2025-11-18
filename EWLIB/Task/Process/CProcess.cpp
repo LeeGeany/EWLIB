@@ -1,7 +1,7 @@
 /**
- * @file CShellCmd.cpp
+ * @file CProcess.cpp
  * @author Jinhee.Lee (jinhee.lee@lignex1.com)
- * @brief 
+ * @brief Create a new process
  * @version 0.1
  * @date 2025-10-06
  * 

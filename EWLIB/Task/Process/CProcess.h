@@ -1,13 +1,12 @@
 /**
- * @file    CProcess.h
- * @author  Jinhee.Lee (jinhee.lee@lignex1.com)
- * @brief   Create a new process
+ * @file CProcess.h
+ * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @brief Create a new process
  * @version 0.1
- * @date    2025-10-06
+ * @date 2025-10-06
  * 
  * @copyright Copyright (c) 2025
  * 
- * ver 0.1 - First Release
  */
 
 #ifndef __EWLIB_TASK_CPROCESS_H__

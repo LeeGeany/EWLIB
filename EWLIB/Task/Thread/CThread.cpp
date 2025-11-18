@@ -1,6 +1,6 @@
 /**
  * @file CThread.cpp
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (jinhee.lee@lignex1.com)
  * @brief 
  * @version 0.1
  * @date 2025-07-13
@@ -11,14 +11,14 @@
 
 #include "CThread.h"
 
-namespace EWLIB 
+namespace jlib 
 {
 
-    CThread::CThread( EW_THREAD_NAME_T      _strThreadName
-                    , EW_THREAD_ID_T        _uiThreadID
-                    , EC_THREAD_RUN_TYPE    _ecThreadRunType
-                    , EW_FUNCTION_T<void()> _function) noexcept
-    : m_Function{std::bind(_function)}
+    CThread::CThread( J_THREAD_NAME_T      _strThreadName
+                    , J_THREAD_ID_T        _uiThreadID
+                    , EC_THREAD_RUN_TYPE   _ecThreadRunType
+                    , J_FUNCTION_T<void()> _function) noexcept
+    : m_Function{_function}
     , m_Thread{m_Function}
     , m_ThreadStateMutex{}
     , m_TCB{  static_cast<std::string>(_strThreadName)
@@ -29,8 +29,8 @@ namespace EWLIB
 
     }
 
-    CThread::CThread( EW_THREAD_NAME_T      _strThreadName
-                    , EW_THREAD_ID_T        _uiThreadID            
+    CThread::CThread( J_THREAD_NAME_T      _strThreadName
+                    , J_THREAD_ID_T        _uiThreadID            
                     , EC_THREAD_RUN_TYPE    _ecThreadRunType) noexcept
     : m_Thread{&CThread::Runnable, this}
     , m_ThreadStateMutex{}
@@ -47,7 +47,7 @@ namespace EWLIB
 
     }
 
-    STATUS CThread::Run()
+    state_t CThread::Run()
     {
         std::unique_lock<std::mutex> lock(m_ThreadStateMutex);
         m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_RUN_T;
@@ -55,7 +55,7 @@ namespace EWLIB
         return 0;
     }
 
-    STATUS CThread::Wait()
+    state_t CThread::Wait()
     {
         std::unique_lock<std::mutex> lock(m_ThreadStateMutex);
         m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_WAIT_T;
@@ -63,7 +63,7 @@ namespace EWLIB
         return 0;
     }
 
-    STATUS CThread::Terminate()
+    state_t CThread::Terminate()
     {
         std::unique_lock<std::mutex> lock(m_ThreadStateMutex);
         m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_TERMINATE_T;
@@ -71,16 +71,16 @@ namespace EWLIB
         return 0;
     }
 
-    STATUS CThread::Join()
+    state_t CThread::Join()
     {
-        STATUS ret = 0;
+        state_t ret = 0;
         m_Thread.join();
         return ret;
     }
 
-    STATUS CThread::Detach()
+    state_t CThread::Detach()
     {
-        STATUS ret = 0;
+        state_t ret = 0;
         m_Thread.detach();
         return ret;
     }
@@ -90,9 +90,14 @@ namespace EWLIB
         return m_TCB;
     }
 
+    J_THREAD_T & CThread::native_handle()
+    {
+        return m_Thread;
+    }
+
     void CThread::PreOperate()
     {
-        //std::cout << "PreOperate\n";
+        std::cout << "PreOperate\n";
     }
 
     void CThread::Operate()
@@ -102,7 +107,7 @@ namespace EWLIB
 
     void CThread::PostOperate()
     {
-        //std::cout << "PostOperate\n";
+        std::cout << "PostOperate\n";
     }
 
     void CThread::Runnable()
@@ -115,7 +120,7 @@ namespace EWLIB
         {
             std::cout << e.what() << '\n';
         }
-        
+
         do
         {
             if(m_TCB.ecThreadStatus == EC_THREAD_STATUS_TYPE::THREAD_STATUS_RUN_T)
@@ -128,6 +133,11 @@ namespace EWLIB
                 {
                     std::cout << e.what() << '\n';
                 }
+
+                if(m_TCB.ecThreadRun == EC_THREAD_RUN_TYPE::THREAD_ONCE_T)
+                {
+                    m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_TERMINATE_T;
+                }
             }
 
             if(m_TCB.ecThreadStatus == EC_THREAD_STATUS_TYPE::THREAD_STATUS_TERMINATE_T)
@@ -135,7 +145,7 @@ namespace EWLIB
                 break;
             }
         }
-        while(m_TCB.ecThreadRun == EC_THREAD_RUN_TYPE::THREAD_LOOP_T);
+        while(m_TCB.ecThreadRun == EC_THREAD_RUN_TYPE::THREAD_LOOP_T || m_TCB.ecThreadRun == EC_THREAD_RUN_TYPE::THREAD_ONCE_T);
 
         try
         {
@@ -146,5 +156,4 @@ namespace EWLIB
             std::cout << e.what() << '\n';
         }
     }
-
-} /* namespace EWLIB */
+} /* namespace jlib */

@@ -11,11 +11,15 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-#include "EWLIB/Task/Process/CProcess.h"
+#define DELAY
 
-int main() {
-    
-    // CProcess Example
+#include "EWLIB/Task/Process/CProcess.h"
+#include "EWLIB/Task/Thread/CThread.h"
+#include "EWLIB/Time/Delay/Delay.h"
+
+int main() 
+{    
+#ifdef PROCESS
     jlib::CProcess Process1("../../a.out");
     jlib::CProcess Process2("../../a.out", jlib::J_PRINT_IN_TERMINAL);
     jlib::CProcess process3("../../a.out", jlib::J_PRINT_IN_STRING);
@@ -24,6 +28,38 @@ int main() {
     jlib::CProcess Process4(" if ping -c 1 192.168.0.1 > /dev/null 2>&1; then echo \"connected\"; else echo \"Disconnect\"; fi", jlib::J_PRINT_IN_TERMINAL);
     jlib::CProcess Process5(" if ping -c 1 192.168.0.1 > /dev/null 2>&1; then echo \"connected\"; else echo \"Disconnect\"; fi", jlib::J_PRINT_IN_STRING);
     std::cout << Process5.Result();
+#endif
+
+#ifdef THREAD
+    jlib::CThread thread1("myThread", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T);
+    thread1.Run();
+    thread1.Join();
+
+    jlib::CThread thread2("myThread", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_LOOP_T);
+    thread2.Run();
+    jlib::delay_ms(3);
+    thread2.Terminate();
+    thread2.Join();
+
+    jlib::J_FUNCTION_T<void()> Function = [](){std::cout << "hello world\n";};
+    jlib::CThread thread3("myThread", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, Function);
+    thread3.Run();
+    thread3.Join();
+#endif
+
+#ifdef DELAY
+    constexpr uint32_t MS = 7;
+    jlib::J_FUNCTION_T<void()> Function = [](){
+            for(int i = 0; i < MS; ++i)
+            {
+                std::cout << "hello world\n";
+                jlib::delay_ms(1);
+            }
+        };
+    jlib::CThread thread("myThread", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, Function);
+    jlib::delay_ms(MS);
+    thread.Join();
+#endif 
 
     return 0;
 }
