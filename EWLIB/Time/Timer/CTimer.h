@@ -1,6 +1,6 @@
 /**
  * @file CTimer.h
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-06
@@ -14,51 +14,40 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
-    using EW_PRECISION_TIMER_ID_T = std::size_t;
-
-    struct ST_TIMER_TASK_T
-    {
-        EW_PRECISION_TIMER_ID_T id;
-        EW_TIMEPOINT_T          next_expire;
-        EW_NANOSECOND_T         interval;
-        EW_CALLBACK_T           callback;
-        bool                    periodic;
-        bool                    active;
-    };
-
     class CTimer
     {
     public:
-        explicit CTimer(const EW_NANOSECOND_T spin_threshold = EW_NANOSECOND_T(100000));
-        virtual ~CTimer();
+        explicit CTimer(const J_NANOSECOND_T interval,
+                        J_CALLBACK_T cb,
+                        bool periodic = false,
+                        J_NANOSECOND_T spin_threshold = J_NANOSECOND_T(5000)) noexcept;
 
-    public:
-        STATUS initTimer();
 
-        EW_PRECISION_TIMER_ID_T addTimer(const EW_NANOSECOND_T _interval, EW_CALLBACK_T _callback, const bool _periodic);
-        EW_PRECISION_TIMER_ID_T addTimer(const EW_MICROSECOND_T _interval, EW_CALLBACK_T _callback, const bool _periodic);
-        EW_PRECISION_TIMER_ID_T addTimer(const EW_MILLISECOND_T _interval, EW_CALLBACK_T _callback, const bool _periodic);
+        ~CTimer();
 
-        STATUS cancelTimer(const EW_PRECISION_TIMER_ID_T id);
+        void stop();
+        void restart();
+        void set_interval(J_NANOSECOND_T interval);
 
-        void stop() noexcept;
+        J_STATE setCPUCore();
 
-        void set_spin_threshold(const EW_NANOSECOND_T _threshold) noexcept;
-        
     private:
         void run();
 
     private:
-        std::atomic<bool>                       m_running;
-        std::atomic<EW_PRECISION_TIMER_ID_T>    m_next_id;
-        std::thread                             m_worker;
-        std::mutex                              m_mutex;
-        std::condition_variable                 m_cv;
-        std::vector<ST_TIMER_TASK_T>            m_tasks;
-        std::atomic<long long>                  m_spin_threshold;
+        std::thread m_thread;
+        std::mutex m_mutex;
+        std::condition_variable m_cv;
 
-    }; /* class CTimer */
-} /* namespace EWLIB */
-#endif /* __EWLIB_TIME_TIMER_CTIMER_H__ */
+        J_NANOSECOND_T m_interval;
+        J_NANOSECOND_T m_spin_threshold;
+        J_TIMEPOINT_T m_next_expire;
+        J_CALLBACK_T m_callback;
+
+        bool m_periodic;
+        bool m_running;
+    };
+}
+#endif

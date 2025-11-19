@@ -1,6 +1,6 @@
 /**
  * @file CThread.cpp
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-07-13
@@ -47,7 +47,7 @@ namespace jlib
 
     }
 
-    state_t CThread::Run()
+    J_STATE CThread::Run()
     {
         std::unique_lock<std::mutex> lock(m_ThreadStateMutex);
         m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_RUN_T;
@@ -55,7 +55,7 @@ namespace jlib
         return 0;
     }
 
-    state_t CThread::Wait()
+    J_STATE CThread::Wait()
     {
         std::unique_lock<std::mutex> lock(m_ThreadStateMutex);
         m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_WAIT_T;
@@ -63,7 +63,7 @@ namespace jlib
         return 0;
     }
 
-    state_t CThread::Terminate()
+    J_STATE CThread::Terminate()
     {
         std::unique_lock<std::mutex> lock(m_ThreadStateMutex);
         m_TCB.ecThreadStatus = EC_THREAD_STATUS_TYPE::THREAD_STATUS_TERMINATE_T;
@@ -71,16 +71,16 @@ namespace jlib
         return 0;
     }
 
-    state_t CThread::Join()
+    J_STATE CThread::Join()
     {
-        state_t ret = 0;
+        J_STATE ret = 0;
         m_Thread.join();
         return ret;
     }
 
-    state_t CThread::Detach()
+    J_STATE CThread::Detach()
     {
-        state_t ret = 0;
+        J_STATE ret = 0;
         m_Thread.detach();
         return ret;
     }

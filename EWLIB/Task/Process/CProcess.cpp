@@ -1,6 +1,6 @@
 /**
  * @file CProcess.cpp
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief Create a new process
  * @version 0.1
  * @date 2025-10-06
@@ -46,9 +46,9 @@ namespace jlib
     }
 
 
-    state_t CProcess::RunShell(const std::string _cmd, const std::vector<std::string> _args) noexcept
+    J_STATE CProcess::RunShell(const std::string _cmd, const std::vector<std::string> _args) noexcept
     {
-        state_t Ret = true;
+        J_STATE Ret = true;
 
         pid_t pid = fork();
         if(pid < 0) {
@@ -74,9 +74,9 @@ namespace jlib
     }
 
 
-    state_t CProcess::RunString(const std::string _cmd, const std::vector<std::string> _args) noexcept
+    J_STATE CProcess::RunString(const std::string _cmd, const std::vector<std::string> _args) noexcept
     {
-        state_t Ret = true;
+        J_STATE Ret = true;
 
         int pipefd[2] = {0,0};
         if(pipe(pipefd) == -1)

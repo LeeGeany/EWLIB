@@ -11,11 +11,13 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-#define DELAY
+#define TIMER
 
 #include "EWLIB/Task/Process/CProcess.h"
 #include "EWLIB/Task/Thread/CThread.h"
 #include "EWLIB/Time/Delay/Delay.h"
+#include "EWLIB/Time/Time/CTime.h"
+#include "EWLIB/Time/Timer/CTimer.h"
 
 int main() 
 {    
@@ -60,6 +62,24 @@ int main()
     jlib::delay_ms(MS);
     thread.Join();
 #endif 
+
+#ifdef TIME
+    jlib::CTime tm;
+    jlib::ST_SYSTEM_TIME_T tm_ = tm.getSystemTime();
+    std::cout << tm_.seconds << " " << tm_.nanoseconds << "\n";
+    std::string strTM = tm.getSystemTimeString();
+    std::cout << strTM << "\n";
+#endif
+
+#ifdef TIMER
+    std::chrono::nanoseconds nInveral = std::chrono::nanoseconds(500000000);
+    jlib::CTimer timer(nInveral, [](){std::cout << "hello world\n";}, true, jlib::nanosec_t(5000));
+    while(1)
+    {
+
+    }
+
+#endif
 
     return 0;
 }

@@ -1,6 +1,6 @@
 /**
  * @file CTIme.cpp
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-06
@@ -11,9 +11,8 @@
 
 #include "CTime.h"
 
-namespace EWLIB
+namespace jlib
 {
-
     CTime::CTime()
     : m_tm({0,0})
     {
@@ -23,7 +22,7 @@ namespace EWLIB
     {
     }
 
-    [[nodiscard]] ST_SYSTEM_TIME_T CTime::get_system_time() noexcept
+    ST_SYSTEM_TIME_T CTime::getSystemTime() noexcept
     {
         struct timespec ts;
         ST_SYSTEM_TIME_T time{};
@@ -36,7 +35,13 @@ namespace EWLIB
         return time;
     }
 
-    [[nodiscard]] bool CTime::set_system_time(const ST_SYSTEM_TIME_T& new_time) noexcept
+    std::string CTime::getSystemTimeString() noexcept
+    {
+        ST_SYSTEM_TIME_T time_ = getSystemTime();
+        return to_string(time_);
+    }
+
+    bool CTime::set_system_time(const ST_SYSTEM_TIME_T& new_time) noexcept
     {
         struct timespec ts;
         ts.tv_sec = static_cast<time_t>(new_time.seconds);
@@ -45,7 +50,7 @@ namespace EWLIB
         return (::clock_settime(CLOCK_REALTIME, &ts) == 0);
     }
 
-    [[nodiscard]] std::string CTime::to_string(const ST_SYSTEM_TIME_T& time) noexcept
+    std::string CTime::to_string(const ST_SYSTEM_TIME_T& time) noexcept
     {
         // 총 초를 분해
         std::int64_t total_seconds = time.seconds + 9 * 3600;

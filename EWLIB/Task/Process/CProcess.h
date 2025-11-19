@@ -1,6 +1,6 @@
 /**
  * @file CProcess.h
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief Create a new process
  * @version 0.1
  * @date 2025-10-06
@@ -74,7 +74,7 @@ namespace jlib
          * @param _args 
          * @return state_t 
          */
-        state_t RunShell(const std::string _cmd, std::vector<std::string> _args) noexcept;
+        J_STATE RunShell(const std::string _cmd, std::vector<std::string> _args) noexcept;
 
         /**
          * @brief Fork another process and print result in string
@@ -83,7 +83,7 @@ namespace jlib
          * @param _args 
          * @return state_t 
          */
-        state_t RunString(const std::string _cmd, std::vector<std::string> _args) noexcept;
+        J_STATE RunString(const std::string _cmd, std::vector<std::string> _args) noexcept;
 
     private:
         std::string m_strResult;

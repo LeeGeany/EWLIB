@@ -18,9 +18,7 @@
 
 namespace jlib
 {
-    // ========================= Primitive Type ========================= //
-
-    using state_t = bool;
+    using J_STATE = bool;
 
     using EW_BYTE                  = std::byte;
     using EW_BYTE_VECTOR_T         = std::vector<EW_BYTE>;
@@ -34,31 +32,31 @@ namespace jlib
     template <typename T>
     using J_FUNCTION_T          = std::function<T>;
     using J_CALLBACK_T          = std::function<void(void)>;
-    
-    // ========================= Time ========================= //
-    using EW_MILLISECOND_T  = std::chrono::milliseconds;
-    using EW_MICROSECOND_T  = std::chrono::microseconds;
-    using EW_NANOSECOND_T   = std::chrono::nanoseconds;
 
-    using EW_CLOCK_T        = std::chrono::steady_clock;
-    using EW_TIMEPOINT_T    = std::chrono::steady_clock::time_point;
-    using EW_DURATION_T     = std::chrono::steady_clock::duration;
+    using J_MILLISECOND_T  = std::chrono::milliseconds;
+    using J_MICROSECOND_T  = std::chrono::microseconds;
+    using J_NANOSECOND_T   = std::chrono::nanoseconds;
 
-    struct ST_SYSTEM_TIME_T
-    {
-        std::int64_t seconds;
-        std::int64_t nanoseconds;
-    };
+    using J_CLOCK_T        = std::chrono::steady_clock;
+    using J_TIMEPOINT_T    = std::chrono::steady_clock::time_point;
+    using J_DURATION_T     = std::chrono::steady_clock::duration;
+
+    using J_CLOCK_T        = std::chrono::steady_clock;
+    using J_TIMEPOINT_T    = std::chrono::time_point<std::chrono::steady_clock>;
+
+
+
+
+
+
+
+
+
+
 
     // ========================= Common/Mutex ========================= //
     using J_MUTEX_T            = std::mutex;
     using EW_LOCK_GUARD_MUTEX_T = std::lock_guard<std::mutex>;
-
-
-    // ========================= Task/Thread ========================= //
-    
-
-
 
 
     // ========================= IPC/MSGQ ========================= //
@@ -69,6 +67,9 @@ namespace jlib
         long mtype;
         char data[8];
     } __attribute__((packed));
+
+
+
 
 
     // ========================= ETHERNET/TCP ========================= //

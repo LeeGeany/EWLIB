@@ -1,6 +1,6 @@
 /**
  * @file CThread.h
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-07-13
@@ -80,35 +80,35 @@ namespace jlib
          * 
          * @return state_t 
          */
-        state_t Run();
+        J_STATE Run();
 
         /**
          * @brief 
          * 
          * @return state_t 
          */
-        state_t Wait();
+        J_STATE Wait();
 
         /**
          * @brief 
          * 
          * @return state_t 
          */
-        state_t Terminate();
+        J_STATE Terminate();
 
         /**
          * @brief 
          * 
          * @return state_t 
          */
-        state_t Join();
+        J_STATE Join();
 
         /**
          * @brief 
          * 
          * @return state_t 
          */
-        state_t Detach();
+        J_STATE Detach();
 
     public:
         /**
