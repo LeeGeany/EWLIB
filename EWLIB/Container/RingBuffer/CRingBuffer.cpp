@@ -1,6 +1,6 @@
 /**
  * @file CRingBuffer.cpp
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-09-14
@@ -12,7 +12,7 @@
 #include "CRingBuffer.h"
 
 
-namespace EWLIB
+namespace jlib
 {
     CRingBuffer::CRingBuffer(size_t capacity)
     : m_Buffer(capacity)
@@ -29,10 +29,10 @@ namespace EWLIB
     
     }
 
-    STATUS CRingBuffer::write(const char* const _pData, size_t _Size) 
+    J_STATE CRingBuffer::write(const char* const _pData, size_t _Size) 
     {
 
-        STATUS ret = true;
+        J_STATE ret = true;
         if (_Size > freeSpace()) {
             
             ret = false; // 공간 부족
@@ -61,9 +61,9 @@ namespace EWLIB
         return ret;
     }
 
-    STATUS CRingBuffer::read(char* const _pData, size_t _Size)
+    J_STATE CRingBuffer::read(char* const _pData, size_t _Size)
     {
-        STATUS ret = true;
+        J_STATE ret = true;
         if (_Size > m_Size) 
         {
             return false; // 읽을 데이터 부족
@@ -94,18 +94,18 @@ namespace EWLIB
         return ret;
     }
     
-    inline STATUS CRingBuffer::isEmpty() const
+    inline J_STATE CRingBuffer::isEmpty() const
     {
-        STATUS Ret = true;
+        J_STATE Ret = true;
         if(m_Size > 0) {
             Ret = false;
         } 
         return Ret;
     }
 
-    inline STATUS CRingBuffer::isFull() const
+    inline J_STATE CRingBuffer::isFull() const
     {
-        STATUS Ret = true;
+        J_STATE Ret = true;
         if(m_Size != m_Capacity) {
             Ret = false;
         } 

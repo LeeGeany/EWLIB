@@ -1,6 +1,6 @@
 /**
  * @file CWaiter.h
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-06
@@ -14,7 +14,7 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
     class CWaiter
     {

@@ -1,6 +1,6 @@
 /**
  * @file CFile.h
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief File Read/Write class header
  * @version 0.1
  * @date 2025-09-18
@@ -15,46 +15,42 @@
 #include "EWLIB/stdEWLIB.h"
 #include "IWrite.h"
 
-namespace EWLIB
+namespace jlib
 {
     class CFWriter : public IWrite
     {
     public:
         explicit CFWriter(const std::string _filePath);
-        explicit CFWriter(const std::string _filePath, ew_binary_wfile_t _fileType);
-        explicit CFWriter(const std::string _filePath, ew_ascii_wfile_t _fileType);
+        explicit CFWriter(const std::string _filePath, j_binary_wfile_t);
+        explicit CFWriter(const std::string _filePath, j_ascii_wfile_t);
         virtual ~CFWriter();
-
 
     public: 
         // std::string 
-        CFWriter & operator<<(const std::string _wBuffer)
+        CFWriter & operator<<(std::string _buffer)
         {   
-            FWrite(_wBuffer);
+            fwrite(_buffer, _buffer.size());
             return *this;
         }
 
-        CFWriter & operator<=(const std::string _wBuffer)
+        CFWriter & operator<<(const char * _buffer)
         {
-            FWrite(_wBuffer);
+            fwrite(_buffer, strlen(_buffer));
             return *this;
         }
-
-        // char buffer
-
-        // byte vector
-
-        // btye array
         
+        std::ofstream & native_handle();
+
     protected:
-        virtual void FWrite(const std::string & _wBuffer) override;
-        virtual void FWrite(const char * const _wBuffer) override;
-        virtual void FWrite(const EW_BYTE_VECTOR_T & _wBuffer) override;
-        virtual void FWrite(const EW_BYTE_ARRAY_T<DEFAULT_BINARY_WBUFFER_SIZE> & _wBuffer) override;
+        virtual void fwrite(std::string & _buffer, size_t _size) override;
+        virtual void fwrite(const char * _buffer, size_t _size) override;
+
+    protected:
+        virtual void toString(std::string & str, std::vector<std::string> & tokens) override;
 
     private:
         const std::string   m_strFilePath;
-        EC_WFILE_TYPE_T      m_ecFileType;
+        EC_WFILE_TYPE_T     m_ecFileType;
 
     protected:
         std::ofstream m_ofsFile;

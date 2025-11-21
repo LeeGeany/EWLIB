@@ -20,43 +20,43 @@ namespace jlib
 {
     using J_STATE = bool;
 
-    using EW_BYTE                  = std::byte;
-    using EW_BYTE_VECTOR_T         = std::vector<EW_BYTE>;
+    using EW_BYTE               = std::byte;
+    using EW_BYTE_VECTOR_T      = std::vector<EW_BYTE>;
     template <std::size_t T>
-    using EW_BYTE_ARRAY_T          = std::array<EW_BYTE, T>;
+    using EW_BYTE_ARRAY_T       = std::array<EW_BYTE, T>;
 
-    using EW_CHAR_VECTOR_T         = std::vector<char>;
+    using EW_CHAR_VECTOR_T      = std::vector<char>;
     template <std::size_t T>
-    using EW_CHAR_ARRAY_T          = std::array<char, T>;
+    using EW_CHAR_ARRAY_T       = std::array<char, T>;
 
     template <typename T>
     using J_FUNCTION_T          = std::function<T>;
     using J_CALLBACK_T          = std::function<void(void)>;
 
-    using J_MILLISECOND_T  = std::chrono::milliseconds;
-    using J_MICROSECOND_T  = std::chrono::microseconds;
-    using J_NANOSECOND_T   = std::chrono::nanoseconds;
+    using J_MILLISECOND_T       = std::chrono::milliseconds;
+    using J_MICROSECOND_T       = std::chrono::microseconds;
+    using J_NANOSECOND_T        = std::chrono::nanoseconds;
 
-    using J_CLOCK_T        = std::chrono::steady_clock;
-    using J_TIMEPOINT_T    = std::chrono::steady_clock::time_point;
-    using J_DURATION_T     = std::chrono::steady_clock::duration;
+    using J_CLOCK_T             = std::chrono::steady_clock;
+    using J_TIMEPOINT_T         = std::chrono::steady_clock::time_point;
+    using J_DURATION_T          = std::chrono::steady_clock::duration;
 
-    using J_CLOCK_T        = std::chrono::steady_clock;
-    using J_TIMEPOINT_T    = std::chrono::time_point<std::chrono::steady_clock>;
+    using J_CLOCK_T             = std::chrono::steady_clock;
+    using J_TIMEPOINT_T         = std::chrono::time_point<std::chrono::steady_clock>;
 
+    using J_PATH                = std::filesystem::path;
 
+    using J_MUTEX_T             = std::mutex;
 
-
-
-
+    template<typename T>
+    using J_LOCK_GUARD_MUTEX_T  = std::lock_guard<T>;
 
 
 
 
 
     // ========================= Common/Mutex ========================= //
-    using J_MUTEX_T            = std::mutex;
-    using EW_LOCK_GUARD_MUTEX_T = std::lock_guard<std::mutex>;
+
 
 
     // ========================= IPC/MSGQ ========================= //
@@ -67,10 +67,6 @@ namespace jlib
         long mtype;
         char data[8];
     } __attribute__((packed));
-
-
-
-
 
     // ========================= ETHERNET/TCP ========================= //
     // ETHERNET/BUFFER/SIZE

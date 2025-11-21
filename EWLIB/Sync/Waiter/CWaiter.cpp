@@ -1,6 +1,6 @@
 /**
  * @file CWaiter.cpp
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-06
@@ -11,7 +11,7 @@
 
 #include "CWaiter.h"
 
-namespace EWLIB
+namespace jlib
 {
     CWaiter::CWaiter() noexcept 
     : m_is_released(false)
@@ -30,7 +30,7 @@ namespace EWLIB
     }
 
     // timeout 기능이 필요한 경우
-    bool CWaiter::wait_for(const std::chrono::milliseconds timeout)
+    bool CWaiter::wait_for(J_MILLISECOND_T timeout)
     {
         std::unique_lock<std::mutex> lock(m_mtx);
         const bool signaled = m_cv.wait_for(

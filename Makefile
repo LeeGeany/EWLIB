@@ -37,19 +37,18 @@ TARGET = main
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Signal/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/*.cpp)
+#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/MsgQ/*.cpp)
 
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Container/RingBuffer*cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Container/RingBuffer*cpp)
 
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Lock/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Mutex/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Semaphore/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Spinlock/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Waiter/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/Dir/*cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/File/*cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/FIO/*cpp)
 
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/Dir/*cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/File/*cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/FileIO/FIO/*cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Lock/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Mutex/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Spinlock/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Sync/Waiter/*.cpp)
 
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Thread/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Task/Process/*cpp)

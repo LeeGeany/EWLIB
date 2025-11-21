@@ -1,6 +1,6 @@
 /**
  * @file FReader.h
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-11
@@ -15,38 +15,43 @@
 #include "EWLIB/stdEWLIB.h"
 #include "IRead.h"
 
-namespace EWLIB
+namespace jlib
 {
     class CFReader : public IRead
     {
     public:
         explicit CFReader(const std::string _filePath) noexcept;
-        explicit CFReader(const std::string _filePath, ew_binary_rfile_t _fileType) noexcept;
-        explicit CFReader(const std::string _filePath, ew_ascii_rfile_t _fileType) noexcept;
+        explicit CFReader(const std::string _filePath, j_binary_rfile_t) noexcept;
+        explicit CFReader(const std::string _filePath, j_ascii_rfile_t) noexcept;
         virtual ~CFReader() noexcept = default;
 
     public:
         // TODO.
         // 1) MAKE THIS WITH ANY, VARIANT
-        CFReader & operator>>(std::vector<std::string> & _rToken)
+        CFReader & operator>>(std::string & _buffer)
         {   
-            FRead(_rToken);
+            fread(_buffer, _buffer.size());
             return *this;
         }
 
-        CFReader & operator>=(std::vector<std::string> & _rToken)
+        CFReader & operator>>(char * const _buffer)
         {
-            FRead(_rToken);
+            std::cout << sizeof(_buffer);
+            fread(_buffer, sizeof(_buffer));
             return *this;
         }
+
+    public:
+        std::ifstream & native_handle();
         
     protected:
-        virtual void FRead(std::vector<std::string> & _rToken) override;
-        virtual void FRead(char * (&_wBuffer)[DEFAULT_BINARY_RBUFFER_SIZE]) override;
-        virtual void FRead(std::vector<EW_BYTE_VECTOR_T> & _rToken) override;
-        virtual void FRead(std::vector<EW_BYTE_ARRAY_T<DEFAULT_BINARY_RBUFFER_SIZE>> & _rToken) override;
-    
+        virtual void fread(std::string & _buffer, size_t _size) override;
+        virtual void fread(char * _buffer, size_t _size) override;
+
     protected:
+        virtual void toToken(std::string & _str, std::vector<std::string> _tokens) override;
+
+    private:
         const std::string   m_strFilePath;
         EC_RFILE_TYPE_T      m_ecFileType;
 

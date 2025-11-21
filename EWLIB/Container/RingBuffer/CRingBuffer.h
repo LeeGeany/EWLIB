@@ -1,6 +1,6 @@
 /**
  * @file CRingBuffer.h
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-09-14
@@ -14,7 +14,7 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
     class CRingBuffer 
     {
@@ -23,14 +23,14 @@ namespace EWLIB
         virtual ~CRingBuffer();
 
         // 소켓에서 읽은 데이터 저장
-        STATUS write(const char* const _pData, size_t _Size);
+        J_STATE write(const char* const _pData, size_t _Size);
 
         // 메시지 단위 읽기 (길이 + 데이터)
-        STATUS read(char* const _pData, size_t _Size);
+        J_STATE read(char* const _pData, size_t _Size);
 
     private:
-        inline STATUS isEmpty() const;
-        inline STATUS isFull() const;
+        inline J_STATE isEmpty() const;
+        inline J_STATE isFull() const;
         inline size_t available() const;
         inline size_t freeSpace() const;
 

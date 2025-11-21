@@ -1,6 +1,6 @@
 /**
  * @file IRead.h
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-11
@@ -14,14 +14,14 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
-    struct ew_binary_rfile_t{};
-    struct ew_ascii_rfile_t{};
+    struct j_binary_rfile_t{};
+    struct j_ascii_rfile_t{};
 
-    inline constexpr ew_binary_rfile_t   EW_BINARY_RFILE_T{};
-    inline constexpr ew_ascii_rfile_t    EW_ASCII_RFILE_T{};
-    const constexpr std::size_t DEFAULT_BINARY_RBUFFER_SIZE = 1024;
+    inline constexpr j_binary_rfile_t   J_BINARY_RFILE_T = j_binary_rfile_t{};
+    inline constexpr j_ascii_rfile_t    J_ASCII_RFILE_T = j_ascii_rfile_t{};
+    inline constexpr std::size_t DEFAULT_BINARY_RBUFFER_SIZE = 1024;
 
     enum class EC_RFILE_TYPE_T { 
           RFILE_TYPE_ASCII
@@ -31,14 +31,15 @@ namespace EWLIB
     class IRead
     {
     public:
-        IRead() = default;
-        virtual ~IRead() = default;
+        IRead();
+        virtual ~IRead();
 
     protected:
-        virtual void FRead(std::vector<std::string> & _rToken)=0;
-        virtual void FRead(char * (&_wBuffer)[DEFAULT_BINARY_RBUFFER_SIZE])=0;
-        virtual void FRead(std::vector<EW_BYTE_VECTOR_T> & _rToken)=0;
-        virtual void FRead(std::vector<EW_BYTE_ARRAY_T<DEFAULT_BINARY_RBUFFER_SIZE>> & _rToken)=0;
+        virtual void fread(std::string & _buffer, size_t _size)=0;
+        virtual void fread(char * const _buffer, size_t _size)=0;
+    
+    protected:
+        virtual void toToken(std::string & _str, std::vector<std::string> _tokens)=0;
     }; /* class IRead */
 } /* namespace EWLIB */
 #endif /* __EWLIB_FILEIO_FILE_IREAD_H__ */

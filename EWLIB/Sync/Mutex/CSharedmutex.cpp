@@ -1,6 +1,6 @@
 /**
  * @file CSharedMutex.cpp
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-07
@@ -11,7 +11,7 @@
 
 #include "CSharedMutex.h"
 
-namespace EWLIB
+namespace jlib
 {
 
     CSharedMutex::CSharedMutex()

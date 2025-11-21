@@ -1,6 +1,6 @@
 /**
  * @file CSpinlock.h
- * @author Jinhee.Lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-04
@@ -14,7 +14,7 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
     class CSpinlock
     {

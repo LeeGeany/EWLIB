@@ -1,6 +1,6 @@
 /**
  * @file IWrite.h
- * @author your name (you@domain.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-10-11
@@ -14,14 +14,15 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
-    struct ew_binary_wfile_t{};
-    struct ew_ascii_wfile_t{};
+    struct j_binary_wfile_t{};
+    struct j_ascii_wfile_t{};
 
-    inline constexpr ew_binary_wfile_t   EW_BINARY_WFILE_T{};
-    inline constexpr ew_ascii_wfile_t    EW_ASCII_WFILE_T{};
-    const constexpr std::size_t DEFAULT_BINARY_WBUFFER_SIZE = 1024;
+    inline constexpr j_binary_wfile_t   J_BINARY_WFILE_T = j_binary_wfile_t{};
+    inline constexpr j_ascii_wfile_t    J_ASCII_WFILE_T = j_ascii_wfile_t{};
+
+    inline constexpr std::size_t DEFAULT_BINARY_WBUFFER_SIZE = 1024;
 
     enum class EC_WFILE_TYPE_T { 
           WFILE_TYPE_ASCII
@@ -31,14 +32,15 @@ namespace EWLIB
     class IWrite
     {
     public:
-        IWrite() = default;
-        virtual ~IWrite() = default;
+        IWrite();
+        virtual ~IWrite();
 
     protected:
-        virtual void FWrite(const std::string & _wBuffer)=0;
-        virtual void FWrite(const char * const _wBuffer)=0;
-        virtual void FWrite(const EW_BYTE_VECTOR_T & _wBuffer)=0;
-        virtual void FWrite(const EW_BYTE_ARRAY_T<DEFAULT_BINARY_WBUFFER_SIZE> & _wBuffer)=0;
+        virtual void fwrite(std::string & _Buffer, size_t _size)=0;
+        virtual void fwrite(const char * _Buffer, size_t _size)=0;
+
+    protected:
+        virtual void toString(std::string & str, std::vector<std::string> & tokens)=0;
     }; /* class IFileRW */
 } /* namespace EWLIB */
 #endif /* __EWLIB_FILEIO_FILE_IWRITE_H__ */
