@@ -31,8 +31,6 @@ OBJ_DIR = Objs
 TARGET = main
 
 # EWLIB
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/*.cpp)
-
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/TCP/*.cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
@@ -57,12 +55,10 @@ SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Delay/*cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Time/*cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Time/Timer/*cpp)
 
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Util/*cpp)
-
 # Main
 SRCS += $(wildcard $(SRC_DIR)/*.cpp)
 
-
+# Build
 OBJS = ${SRCS:.cpp=.o}
 DEPS = $(OBJS:.o=.d)
 
@@ -75,8 +71,6 @@ all: main
 $(OBJ_DIR)/%.o : %.cpp
 	mkdir -p $(shell dirname $@)
 	$(CC) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
-
-
 
 $(TARGET) : $(OBJECTS)
 	$(CC) $(CXXFLAGS) $(INCLUDE) $(OBJECTS) -o  $(TARGET) $(LDFLAGS) $(LIBS) 
