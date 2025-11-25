@@ -14,9 +14,6 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-#include "EWLIB/Communication/Ethernet/TCP/IReceive.h"
-#include "EWLIB/Communication/Ethernet/TCP/ISend.h"
-
 namespace EWLIB
 {
     inline constexpr const size_t EW_CLIENT_CONN_MAX_SIZE  = 16;

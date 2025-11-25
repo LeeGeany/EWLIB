@@ -7,105 +7,82 @@
  * @copyright jinhee.lee
  */
 
-#ifndef __COMMON_COMMUNICATION_SIGNAL_CSIGNAL_H__
-#define __COMMON_COMMUNICATION_SIGNAL_CSIGNAL_H__
+#ifndef __EWLIB_EVENT_SIGNAL_SIGNAL_H__
+#define __EWLIB_EVENT_SIGNAL_SIGNAL_H__
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace comm {
-namespace sig { 
-
-class CSignal
+namespace jlib
 {
-private:
-    /**
-     * @brief Construct a new CSignal object
-     */
-    CSignal();
-
-    /**
-     * @brief Destroy the CSignal object
-     */
-    virtual ~CSignal();
-
-
-public:
-    /**
-     * @brief 
-     * @param Signal
-     * @param
-     * @return
-     */
-    void Insert(int SigType, void(*Handler)(int));
-
-    /**
-     * @brief 
-     */
-    void Delete(int SigType);
-
-    /**
-     * @brief
-     * @param SigType
-     * @return 
-     */
-    int Block(int SigType);
-
-    /**
-     * @brief
-     * @return 
-     */
-    int BlockAll();
-
-    /**
-     * @brief 
-     * @param SigType
-     * @return
-     */
-    int Release(int SigType);
-
-    /**
-     * @brief 
-     * @return
-     */
-    int ReleaseAll();
-
-
-private:
-    /**
-     * @brief 
-     */
-    static CSignal * m_pInstance;
-
-    /**
-     * @brief
-     */
-    static std::mutex m_Mutex;
-
-    /**
-     * @brief 
-     */
-    sigset_t m_Set;
-
-public:
-    /**
-     * @brief Get the Signal Mgr object
-     * @return CSignal& 
-     */
-    static CSignal * GetSignalMgr()
+    class CSignal
     {
-        if(m_pInstance == nullptr)
-        {
-            std::lock_guard<std::mutex> lock(m_Mutex);
-            if(m_pInstance == nullptr)
-            {
-                m_pInstance = new CSignal();
-            }
-        }
+    public:
+        /**
+         * @brief Construct a new CSignal object
+         */
+        CSignal() noexcept;
 
-        return m_pInstance;
-    }
-};
+        /**
+         * @brief Destroy the CSignal object
+         */
+        virtual ~CSignal() noexcept;
 
-} /* namespace sig */
-} /* namespace comm */
-#endif /* __COMMON_COMMUNICATION_SIGNAL_CSIGNAL_H__ */
+
+    public:
+        /**
+         * @brief 
+         * @param Signal
+         * @param
+         * @return
+         */
+        //void Insert(int SigType, void(*Handler)(int));
+        void Insert(int SigType, J_CALLBACK_T<void(int)>  _callback);
+
+        /**
+         * @brief 
+         */
+        void Delete(int SigType);
+
+        /**
+         * @brief
+         * @param SigType
+         * @return 
+         */
+        int Block(int SigType);
+
+        /**
+         * @brief
+         * @return 
+         */
+        int BlockAll();
+
+        /**
+         * @brief 
+         * @param SigType
+         * @return
+         */
+        int Release(int SigType);
+
+        /**
+         * @brief 
+         * @return
+         */
+        int ReleaseAll();
+
+    private:
+        static void Callback(int sig);
+
+    private:
+        /**
+         * @brief 
+         */
+        sigset_t m_Set;
+
+        /**
+         * @brief 
+         * 
+         */
+        static J_CALLBACK_T<void(int)> m_callback;
+    };
+} /* namespace jlib */
+#endif /* __EWLIB_EVENT_SIGNAL_SIGNAL_H__ */

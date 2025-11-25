@@ -31,7 +31,8 @@ namespace jlib
 
     template <typename T>
     using J_FUNCTION_T          = std::function<T>;
-    using J_CALLBACK_T          = std::function<void(void)>;
+    template <typename T>
+    using J_CALLBACK_T          = std::function<T>;
 
     using J_MILLISECOND_T       = std::chrono::milliseconds;
     using J_MICROSECOND_T       = std::chrono::microseconds;
@@ -52,21 +53,10 @@ namespace jlib
     using J_LOCK_GUARD_MUTEX_T  = std::lock_guard<T>;
 
 
-
-
-
-    // ========================= Common/Mutex ========================= //
-
-
-
     // ========================= IPC/MSGQ ========================= //
     using EW_MSGQ_KEY_T            = int32_t;
     using EW_MSGQ_ID_T             = int32_t;
 
-    struct ST_MSG_Q_T {
-        long mtype;
-        char data[8];
-    } __attribute__((packed));
 
     // ========================= ETHERNET/TCP ========================= //
     // ETHERNET/BUFFER/SIZE

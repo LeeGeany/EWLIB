@@ -11,7 +11,7 @@
 
 #include "CEpoll.h"
 
-namespace EWLIB
+namespace jlib
 {
     CEpoll::CEpoll(uint32_t _maxEvent) noexcept
     : m_epollFd(::epoll_create1(EPOLL_CLOEXEC)), m_maxEvents(_maxEvent)

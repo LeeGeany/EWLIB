@@ -1,6 +1,6 @@
 /**
  * @file CMsgQ.cpp
- * @author jinhee.lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-07-13
@@ -11,7 +11,7 @@
 
  #include "CMsgQ.h"
 
- namespace EWLIB {
+ namespace jlib {
 
     CMsgQ::CMsgQ() noexcept
     {
@@ -20,8 +20,8 @@
 
     CMsgQ::CMsgQ(EW_MSGQ_KEY_T _MsgKey) noexcept
     : m_MsgID{SubscribeMsgQ(_MsgKey)}
-    , m_SendBuffer{0,}
-    , m_RecvBuffer{0,}
+    , m_SendBuffer{1,}
+    , m_RecvBuffer{1,}
     {
         std::cout << "MSGID : " << m_MsgID << "\n";
     }
@@ -33,19 +33,15 @@
 
     EW_MSGQ_ID_T CMsgQ::SubscribeMsgQ(EW_MSGQ_KEY_T _MsgKey)
     {
-        EW_MSGQ_ID_T retID = msgget(_MsgKey, IPC_CREAT | 0x666);
-        return retID;
+        return msgget(_MsgKey, IPC_CREAT | 0x666);
     }
 
-    int CMsgQ::SendMsg(EW_MSGQ_ID_T _DestID, EW_BYTE * _pBuffer)
+    int CMsgQ::SendMsg(char * _pBuffer, size_t _size)
     {
         m_SendBuffer.mtype = 1;
-        memcpy(&(m_SendBuffer.data[0]), _pBuffer, sizeof(m_SendBuffer.data));
+        memcpy(m_SendBuffer.mtext, _pBuffer, _size);
 
-        //printf("sizeof : %d , data : 0x%llx\n", sizeof(m_Buffer.data), (m_Buffer.data));
-        //printf("sizeof : %d , data : 0x%llx\n", sizeof(_pBuffer), (long long)(_pBuffer));
-
-        int ret = msgsnd(_DestID, &m_SendBuffer, sizeof(m_SendBuffer) - sizeof(long), IPC_NOWAIT);
+        int ret = msgsnd(m_MsgID, &m_SendBuffer, sizeof(ST_MSG_Q_T) - sizeof(long), IPC_NOWAIT);
         if(ret == -1) {
             printf("Send Errno = %d\n", errno);
         } else {
@@ -55,13 +51,13 @@
         return ret;
     }
 
-    int CMsgQ::RecvMsg(EW_BYTE * _pBuffer)
+    int CMsgQ::RecvMsg(char * _pBuffer, size_t _size)
     {
-        int ret =  msgrcv(m_MsgID, &m_RecvBuffer, sizeof(m_RecvBuffer) - sizeof(long),0, 0);
+        int ret =  msgrcv(m_MsgID, &m_RecvBuffer, sizeof(ST_MSG_Q_T) - sizeof(long), 0, 0);
         if(ret == -1) {
             printf("Receive Errno = %d\n", errno);
         } else {
-            memcpy(_pBuffer, &(m_RecvBuffer.data[0]), sizeof(m_RecvBuffer.data));
+            memcpy(_pBuffer, &m_RecvBuffer.mtext, _size);
         }
 
         return ret;
@@ -80,9 +76,9 @@
     }
 
 
-    STATUS CMsgQ::DeleteMsg()
+    J_STATE CMsgQ::DeleteMsg()
     {
-        STATUS ret = msgctl(m_MsgID, IPC_RMID, NULL);
+        J_STATE ret = msgctl(m_MsgID, IPC_RMID, NULL);
         
         if(ret == -1)
         {
@@ -92,7 +88,7 @@
         return ret;
     }
 
-    EW_MSGQ_ID_T CMsgQ::getMsgID()
+    EW_MSGQ_ID_T CMsgQ::native_handle()
     {
         return m_MsgID;
     }

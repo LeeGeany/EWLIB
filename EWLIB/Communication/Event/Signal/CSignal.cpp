@@ -9,77 +9,82 @@
 
 #include "CSignal.h"
 
-namespace comm {
-namespace sig {
-
-CSignal * CSignal::m_pInstance = nullptr;
-std::mutex CSignal::m_Mutex;
-
-CSignal::CSignal()
+namespace jlib
 {
-    sigemptyset(&m_Set);
-}
+    J_CALLBACK_T<void(int)> CSignal::m_callback;
 
-CSignal::~CSignal()
-{
-
-}
-
-void CSignal::Insert(int SigType, void(*Handler)(int))
-{
-    int Ret = 0;
-    Ret = sigaddset(&m_Set, SigType);
-    
-    if(Ret == 0)
+    CSignal::CSignal() noexcept
     {
-        sigprocmask(SIG_SETMASK, &m_Set, NULL);
-        signal(SigType, Handler);
+        sigemptyset(&m_Set);
     }
-    
-    
-}
 
-void CSignal::Delete(int SigType)
-{
-    int Ret = 0;
-    Ret = sigdelset(&m_Set, SigType);
+    CSignal::~CSignal() noexcept
+    {
 
-    sigprocmask(SIG_SETMASK, &m_Set, NULL);
-}
+    }
 
-int CSignal::Block(int SigType)
-{
-    int Ret = 0;
-    sigset_t tSet;
+    //void CSignal::Insert(int SigType, void(*Handler)(int))
+    void CSignal::Insert(int SigType, J_CALLBACK_T<void(int)> _callback)
+    {
+        int Ret = 0;
+        sigemptyset(&m_Set);
+        Ret = sigaddset(&m_Set, SigType);
+        
+        m_callback = std::move(_callback);
 
-    Ret = sigaddset(&tSet, SigType);
-    sigprocmask(SIG_BLOCK, &tSet, NULL);
+        
+        if(Ret == 0)
+        {
+            sigprocmask(SIG_SETMASK, &m_Set, NULL);
+            //signal(SigType, Handler);
+            signal(SigType, Callback);
+        }
+    }
 
-    return Ret;
-}
+    void CSignal::Delete(int SigType)
+    {
+        int Ret = 0;
+        Ret = sigdelset(&m_Set, SigType);
 
-int CSignal::BlockAll()
-{
-    int ret = sigprocmask(SIG_BLOCK, &m_Set, NULL);
-    return ret;
-}
+        sigprocmask(SIG_SETMASK, &m_Set, NULL);
+    }
 
-int CSignal::Release(int SigType)
-{
-    int Ret = 0;
-    sigset_t tSet;
-    
-    Ret = sigaddset(&tSet, SigType);
-    sigprocmask(SIG_BLOCK, &tSet, NULL);
+    int CSignal::Block(int SigType)
+    {
+        int Ret = 0;
+        sigset_t tSet;
 
-    return Ret;
-}
+        Ret = sigaddset(&tSet, SigType);
+        sigprocmask(SIG_BLOCK, &tSet, NULL);
 
-int CSignal::ReleaseAll()
-{
-    int ret = sigprocmask(SIG_UNBLOCK, &m_Set, NULL);
-    return ret;
-}
+        return Ret;
+    }
 
-} /* namespace sig */
-} /* namespace comm */
+    int CSignal::BlockAll()
+    {
+        int ret = sigprocmask(SIG_BLOCK, &m_Set, NULL);
+        return ret;
+    }
+
+    int CSignal::Release(int SigType)
+    {
+        int Ret = 0;
+        sigset_t tSet;
+        
+        Ret = sigaddset(&tSet, SigType);
+        sigprocmask(SIG_BLOCK, &tSet, NULL);
+
+        return Ret;
+    }
+
+    int CSignal::ReleaseAll()
+    {
+        int ret = sigprocmask(SIG_UNBLOCK, &m_Set, NULL);
+        return ret;
+    }
+
+    void CSignal::Callback(int sig)
+    {
+        m_callback(sig);
+    }
+} /* namespace jlib */

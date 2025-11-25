@@ -20,7 +20,7 @@ namespace jlib
     {
     public:
         explicit CTimer(const J_NANOSECOND_T interval,
-                        J_CALLBACK_T cb,
+                        J_CALLBACK_T<void(void)> _callback,
                         bool periodic = false,
                         J_NANOSECOND_T spin_threshold = J_NANOSECOND_T(5000)) noexcept;
 
@@ -44,7 +44,7 @@ namespace jlib
         J_NANOSECOND_T m_interval;
         J_NANOSECOND_T m_spin_threshold;
         J_TIMEPOINT_T m_next_expire;
-        J_CALLBACK_T m_callback;
+        J_CALLBACK_T<void(void)> m_callback;
 
         bool m_periodic;
         bool m_running;

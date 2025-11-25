@@ -14,11 +14,11 @@
 namespace jlib
 {
     CTimer::CTimer(const J_NANOSECOND_T interval,
-                J_CALLBACK_T cb,
+                J_CALLBACK_T<void(void)> _callback,
                 bool periodic,
                 J_NANOSECOND_T spin_threshold) noexcept
     : m_interval(interval)
-    , m_callback(cb)
+    , m_callback(_callback)
     , m_periodic(periodic)
     , m_spin_threshold(spin_threshold)
     , m_running(true)

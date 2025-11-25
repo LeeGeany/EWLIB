@@ -25,18 +25,146 @@
 #include "EWLIB/FileIO/File/File.h"
 #include "EWLIB/FileIO/Dir/Dir.h"
 #include "EWLIB/Container/RingBuffer/CRingBuffer.h"
+#include "EWLIB/Communication/IPC/MsgQ/CMsgQ.h"
+#include "EWLIB/Communication/IPC/MsgQ/CMsgQ_S.h"
+#include "EWLIB/Communication/Event/Signal/CSignal.h"
+#include "EWLIB/Communication/Event/Epoll/CEpoll.h"
 
-#define FILE
+#define EPOLL
 #pragma pack()
 
 int main() 
 {
-#ifdef DIR
+
+#ifdef EPOLL
+        jlib::CEpoll epoll(10);
+
+        int pipefd[2];
+        if (pipe(pipefd) == -1) {
+            perror("pipe");
+            return 1;
+        }
+
+        int readFd = pipefd[0];
+        int writeFd = pipefd[1];
+
+        const char* msg = "Hello epoll";
+
+        // addFd 테스트
+        epoll.addFd(readFd, EPOLLIN, (void*)"read_pipe");
+
+        std::cout << "Epoll FD: " << epoll.fd() << std::endl;
+
+        // writeFd로 데이터 쓰기
+        write(writeFd, msg, strlen(msg));
+
+        // wait 테스트
+        int n = epoll.wait(1000); // 1초 대기
+        std::cout << "epoll_wait returned: " << n << std::endl;
+
+        for (int i = 0; i < n; ++i) {
+            const struct epoll_event& ev = epoll.getEvent(i);
+            std::cout << "Event " << i << ": ";
+            if (ev.events & EPOLLIN) std::cout << "EPOLLIN ";
+            if (ev.events & EPOLLOUT) std::cout << "EPOLLOUT ";
+            std::cout << ", userData: " << static_cast<const char*>(ev.data.ptr) << std::endl;
+
+            // 실제 읽기
+            if (ev.events & EPOLLIN) {
+                char buf[128] = {0};
+                int r = read(readFd, buf, sizeof(buf));
+                std::cout << "Read from pipe: " << buf << std::endl;
+
+                // modifyFd 테스트 (예: 이제 EPOLLOUT 감지)
+                epoll.modifyFd(readFd, EPOLLOUT, (void*)"read_pipe_mod");
+            }
+        }
+
+        // removeFd 테스트
+        epoll.removeFd(readFd);
+        close(readFd);
+        close(writeFd);
+
+        std::cout << "CEpoll test finished." << std::endl;
+#endif
+
+#ifdef SIGNAL
+    jlib::CSignal sig;
+
+    // 일반 함수형 람다로 등록
+    sig.Insert(SIGINT, [](int s){
+        std::cout << "SIGINT received! signal=" << s << std::endl;
+    });
+
+    sig.Insert(SIGTERM, [](int s){
+        std::cout << "SIGTERM received! signal=" << s << std::endl;
+    });
+
+    std::cout << "Press Ctrl+C to test SIGINT..." << std::endl;
+
+    // 프로그램 종료 전까지 무한 대기
+    while(true)
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+#endif
+
+#ifdef MSGQ_S
+    jlib::CMsgQ_S<int> msg;
+    jlib::J_FUNCTION_T<void()> func1 = [&](){
+                    int msg_s = 0;
+        while(1)
+        {
+            msg_s++;
+            msg.SendMsg(&msg_s, sizeof(int));
+            jlib::delay_ms(1000);
+        }
+    };
+
+    jlib::J_FUNCTION_T<void()> func2 = [&](){
+        while(1)
+        {            
+            int rec;
+            msg.RecvMsg(&rec, 12);
+            std::cout << rec << "\n";
+        }
+    };
+
+    jlib::CThread thread2("recv", 0x2000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, func2);
+    jlib::CThread thread1("send", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, func1);
+    thread1.Join();
+    thread2.Join();
 
 #endif
 
-#ifdef FILE
+#ifdef MSGQ
 
+    jlib::CMsgQ msg1_(0x1000);
+    jlib::J_FUNCTION_T<void()> func1 = [&](){
+        jlib::delay_ms(3000);
+        while(1)
+        {
+            char buffer[12] = "helloworld\n";
+            msg1_.SendMsg(&(buffer[0]), strlen(buffer) + 1);
+            jlib::delay_ms(3000);
+        }
+    };
+
+    jlib::J_FUNCTION_T<void()> func2 = [&](){
+        jlib::delay_ms(3000);
+        while(1)
+        {
+            char buffer[64] = "";
+            msg1_.RecvMsg(buffer, 12);
+            printf("recv : %s\n", buffer);
+        }
+    };
+
+    jlib::CThread thread2("recv", 0x2000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, func2);
+    jlib::CThread thread1("send", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, func1);
+
+    thread1.Join();
+    thread2.Join();
 #endif
 
 #ifdef FILEREAD

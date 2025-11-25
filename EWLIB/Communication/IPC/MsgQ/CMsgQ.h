@@ -1,6 +1,6 @@
 /**
  * @file CMsgQ.h
- * @author jinhee.lee (jinhee.lee@lignex1.com)
+ * @author Jinhee.Lee (tjrgl@naver.com)
  * @brief 
  * @version 0.1
  * @date 2025-07-13
@@ -14,8 +14,14 @@
  
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB 
+namespace jlib 
 {
+    inline constexpr size_t MAX_BUFFER_SIZE = 128;
+    
+    struct ST_MSG_Q_T {
+        long mtype;
+        char mtext[MAX_BUFFER_SIZE];
+    };
 
     class CMsgQ 
     {
@@ -30,16 +36,15 @@ namespace EWLIB
         // TODO
         // Make same function as another type parameter
         // ex) EW_BYTE_ARRAY_T, EW_BYTE_VECTOR_T
-        int SendMsg(EW_MSGQ_ID_T _DestID, EW_BYTE * _pBuffer);
-        int RecvMsg(EW_BYTE * _pBuffer);
+        int SendMsg(char * _pBuffer, size_t _size);
+        int RecvMsg(char * _pBuffer, size_t _size);
         
         int FlushMsg();
         int InfoMsg(EW_MSGQ_ID_T _MsgID, struct msqid_ds * _pINfo);
-
-        STATUS DeleteMsg();
+        J_STATE DeleteMsg();
 
     public:
-        EW_MSGQ_ID_T getMsgID();
+        EW_MSGQ_ID_T native_handle();
 
     private:
         EW_MSGQ_ID_T m_MsgID;

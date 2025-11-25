@@ -1,2 +1,2 @@
-# EWLIB
-The Wrapper for Linux C functions.
+# JLIB
+The Wrapper Library with Linux, C++17, POSIX headers.

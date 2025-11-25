@@ -14,8 +14,10 @@
 
 #include "EWLIB/stdEWLIB.h"
 
-namespace EWLIB
+namespace jlib
 {
+    inline constexpr size_t EPOLL_EVENTS_SIZE = 4096;
+
     class CEpoll
     {
     public:

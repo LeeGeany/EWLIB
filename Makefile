@@ -35,9 +35,9 @@ TARGET = main
 
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/TCP/*.cpp)
 #SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Signal/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/MsgQ/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Signal/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/MsgQ/*.cpp)
 
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Container/RingBuffer*cpp)
 
