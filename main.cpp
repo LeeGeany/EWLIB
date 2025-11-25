@@ -24,17 +24,32 @@
 #include "EWLIB/FileIO/FIO/CFReader.h"
 #include "EWLIB/FileIO/File/File.h"
 #include "EWLIB/FileIO/Dir/Dir.h"
-#include "EWLIB/Container/RingBuffer/CRingBuffer.h"
+#include "EWLIB/Container/CRingBuffer.h"
 #include "EWLIB/Communication/IPC/MsgQ/CMsgQ.h"
 #include "EWLIB/Communication/IPC/MsgQ/CMsgQ_S.h"
 #include "EWLIB/Communication/Event/Signal/CSignal.h"
 #include "EWLIB/Communication/Event/Epoll/CEpoll.h"
 
-#define EPOLL
+#define RINGBUFFER
 #pragma pack()
 
 int main() 
 {
+
+#ifdef RINGBUFFER
+    jlib::CRingBuffer<int> rb;
+    std::array<int, 7> arr1 = {1,2,3,4,5,6,7};
+    rb.write(arr1.data(), arr1.size());
+
+    std::array<int, 7> arr2 = {};
+    rb.read(arr2.data(), arr2.size());
+
+    for(auto e : arr2)
+    {
+        std::cout << e;
+    }
+
+#endif
 
 #ifdef EPOLL
         jlib::CEpoll epoll(10);
@@ -373,5 +388,4 @@ int main()
     }
 #endif
     return 0;
-
 }
