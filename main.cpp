@@ -29,12 +29,126 @@
 #include "EWLIB/Communication/IPC/MsgQ/CMsgQ_S.h"
 #include "EWLIB/Communication/Event/Signal/CSignal.h"
 #include "EWLIB/Communication/Event/Epoll/CEpoll.h"
+#include "EWLIB/Communication/Ethernet/Server/CTCPServer.h"
+#include "EWLIB/Communication/Ethernet/Client/CTCPClient.h"
+#include "EWLIB/Communication/Ethernet/Socket/CTCPSocket.h"
+#include "EWLIB/Communication/Ethernet/Server/CUDPServer.h"
+#include "EWLIB/Communication/Ethernet/Client/CUDPClient.h"
+#include "EWLIB/Communication/Ethernet/Socket/CUDPSocket.h"
 
-#define RINGBUFFER
+#define UDP
 #pragma pack()
 
 int main() 
 {
+#ifdef UDP
+    std::string str_;
+    std::cin >> str_;
+
+    jlib::J_FUNCTION_T<void()> clientFunction_ = [](){
+        jlib::CUDPClient client_;
+        client_.Connect("127.0.0.1", 9000); 
+        auto SOCK = reinterpret_cast<jlib::CTCPSocket*>(client_.GetSocket());
+        SOCK->Send("HELLO", 5);
+
+        char buf[1024];
+        ssize_t n = SOCK->Recv(buf, sizeof(buf));
+        if (n > 0) {
+            printf("recv: %.*s\n", (int)n, buf);
+        }
+    };
+
+    jlib::J_FUNCTION_T<void()> serverFunction_ = [](){
+        jlib::CUDPServer server_;
+        server_.Bind("0.0.0.0", 9000);
+
+        while (true)
+        {
+            //auto client_ = server_.Accept();
+            //if(!client_) continue;
+
+            auto server = server_.
+
+            char buf[1024];
+            ssize_t n = server_->Recv(buf, sizeof(buf));
+            if (n > 0) {
+                server_->Send(buf, n); // echo
+            }
+        }
+    };
+
+    if(str_ == "client")
+    {
+        jlib::CThread thread1("client", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_LOOP_T, clientFunction_);
+        thread1.Run();
+        thread1.Join();
+    }
+    else if(str_ == "server")
+    {
+        jlib::CThread thread2("server", 0x2000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, serverFunction_);
+        thread2.Run();
+        thread2.Join();
+    }
+    else
+    {
+        std::cout << "NO COmmand\n";
+    }
+#endif 
+
+#ifdef TCP
+
+    std::string str_;
+    std::cin >> str_;
+
+    jlib::J_FUNCTION_T<void()> clientFunction_ = [](){
+        jlib::CTCPClient client_;
+        client_.Connect("127.0.0.1", 9000); 
+        auto SOCK = reinterpret_cast<jlib::CTCPSocket*>(client_.GetSocket());
+        SOCK->Send("HELLO", 5);
+
+        char buf[1024];
+        ssize_t n = SOCK->Recv(buf, sizeof(buf));
+        if (n > 0) {
+            printf("recv: %.*s\n", (int)n, buf);
+        }
+    };
+
+    jlib::J_FUNCTION_T<void()> serverFunction_ = [](){
+        jlib::CTCPServer server_;
+        server_.Bind("0.0.0.0", 9000);
+        server_.Listen(128);
+
+        while (true)
+        {
+            auto client_ = server_.Accept();
+            if(!client_) continue;
+
+            char buf[1024];
+            ssize_t n = client_->Recv(buf, sizeof(buf));
+            if (n > 0) {
+                client_->Send(buf, n); // echo
+            }
+        }
+    };
+
+    if(str_ == "client")
+    {
+        jlib::CThread thread1("client", 0x1000, jlib::EC_THREAD_RUN_TYPE::THREAD_LOOP_T, clientFunction_);
+        thread1.Run();
+        thread1.Join();
+    }
+    else if(str_ == "server")
+    {
+        jlib::CThread thread2("server", 0x2000, jlib::EC_THREAD_RUN_TYPE::THREAD_ONCE_T, serverFunction_);
+        thread2.Run();
+        thread2.Join();
+    }
+    else
+    {
+        std::cout << "NO COmmand\n";
+    }
+
+#endif
 
 #ifdef RINGBUFFER
     jlib::CRingBuffer<int> rb;

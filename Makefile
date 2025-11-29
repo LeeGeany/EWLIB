@@ -31,8 +31,9 @@ OBJ_DIR = Objs
 TARGET = main
 
 # EWLIB
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/TCP/*.cpp)
-#SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/UDP/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/Socket/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/Client/*.cpp)
+SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Ethernet/Server/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Epoll/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/Event/Signal/*.cpp)
 SRCS += $(wildcard $(SRC_DIR)/EWLIB/Communication/IPC/MsgQ/*.cpp)
