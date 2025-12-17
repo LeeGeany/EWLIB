@@ -36,7 +36,8 @@
 #include "EWLIB/Communication/Ethernet/Client/CUDPClient.h"
 #include "EWLIB/Communication/Ethernet/Socket/CUDPSocket.h"
 
-#define UDP
+
+#define RINGBUFFER
 #pragma pack()
 
 int main() 

@@ -9,6 +9,9 @@
  * 
  */
 
+#ifndef __EWLIB_COMMUNICATION_ETHERNET_SERVER_H__
+#define __EWLIB_COMMUNICATION_ETHERNET_SERVER_H__
+
 #include "EWLIB/stdEWLIB.h"
 
 class CTCPSocket;
@@ -28,3 +31,5 @@ namespace jlib
         virtual std::shared_ptr<ISocket> Accept() = 0;
     };
 } /* namespace jlib */
+
+#endif /*__EWLIB_COMMUNICATION_ETHERNET_SERVER_H__  */
